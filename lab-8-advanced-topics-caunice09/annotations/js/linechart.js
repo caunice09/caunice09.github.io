@@ -95,6 +95,35 @@ class LineChart {
           dy: -vis.config.height, // Show text label at the top of the chart
           data: { Date: '8/15/1998'}
         },
+
+        {
+          note: { label: 'iPod Release' },
+          className: 'dashed',
+          subject: {
+            y1: 0,
+            y2: vis.config.height
+          },
+          disable: ['connector'],
+          dy: -vis.config.height, // Show text label at the top of the chart
+          data: { Date: '10/23/2001'}
+        },
+        {
+          note: {
+            label: "Stock Split 2:1",
+            lineType:"none",
+            orientation: "leftRight",
+            align: "middle"
+          },
+          className: "anomaly",
+          type: d3.annotationCalloutCircle,
+          subject: { radius: 60 },			          // Circle radius in pixels
+          data: { Date: "6/21/2000", Close: 76},	// Position of the circle will be 
+                                                  // determined from the data
+          dx: 70 					                        // Offset x-position of the text 
+                                                  // label
+        },
+
+
   
         {
           note: { label: 'Above $100', wrap: 100, },
@@ -110,10 +139,27 @@ class LineChart {
   
       // Define base annotation type that may get overriden for some elements by the annotation specification
 
+      vis.baseAnnotationType = d3.annotationCustomType(d3.annotationXYThreshold, {
+          'note': {
+     		      'lineType':'none',
+              'orientation': 'top',
+              'align':'middle'
+        }
+});
+
 
       // Generate the annotation based on the given specifications
 
-  
+    vis.makeAnnotations = d3.annotation()
+      .type(vis.baseAnnotationType)
+      .accessors({ 
+          // Use existing D3 scales that we used for the chart to position the annotations
+    	x: d => vis.xScale(new Date(d.Date)),
+    	y: d => vis.yScale(d.Close)
+    })
+      .annotations(vis.annotationSpecification)
+      .textWrap(30);	// Break longer text into multiple lines
+
       vis.renderVis();
     }
   
@@ -131,7 +177,7 @@ class LineChart {
           .attr('d', vis.line);
   
       // Add annotation elements to the SVG
-     
+     vis.annotationsG.call(vis.makeAnnotations);
       
       // Update the axes
       vis.xAxisG.call(vis.xAxis);

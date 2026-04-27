@@ -39,7 +39,7 @@ class ScrollerVis {
 
     vis.xScale = d3.scaleLinear()
         .range([0, vis.config.width-vis.config.yAxisWidth])
-        .domain([0, d3.max(dataTop5, d => d.distance)]);
+        .domain([0, d3.max(dataTop5, d => d.time)]);
 
     // Define size of SVG drawing area
     vis.svg = d3.select(vis.config.parentElement).append('svg')
@@ -100,12 +100,12 @@ class ScrollerVis {
   step3() {
     const vis = this;
     
-    // Highlight one trail
+    // Highlight one assignment
     // Important: We also need to update the width, height, etc because these attributes are
     // getting changed in step4() and we want to allow users to scroll up and down.
     vis.rect.transition()
         .attr('opacity', 1)
-        .attr('fill', d => d.name==vis.dataLongestAssignment.assignment_type ? vis.colorScale('highlighted') : vis.colorScale('inactive'))
+        .attr('fill', d => d.name==vis.dataLongestAssignment.name ? vis.colorScale('highlighted') : vis.colorScale('inactive'))
         .attr('width', d => vis.config.cellWidth)
         .attr('height', d => vis.config.cellHeight)
         .attr('x', (d, i) => i % vis.config.columns * (vis.config.cellWidth + vis.config.cellSpacing))

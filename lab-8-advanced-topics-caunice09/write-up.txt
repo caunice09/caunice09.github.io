@@ -1,0 +1,8 @@
+How long did this take (estimate)? ~2 hours 
+What were the enjoyable aspects of the lab? I liked learning about the annotations and the scrollytelling.
+I think those are both really unique and helpful visualizations that I could apply in a later course.
+What were the challenging parts of this lab? The scrollytelling was definitely the hardest part. I think just simply
+missing some variabes switches from the trails to the data vis data was tricky, and also transitiong
+from the boxes to a new layout (the barchart at the end) had me stumped for a little.
+What resources did you use? Include links to websites below. 
+No extra resources! I just googled some git commands.
